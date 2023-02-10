@@ -16,7 +16,17 @@ A convolution is a mathematical operation between two functions to produce a thi
 Correlation is a measure of the similarity between two signals, usually as a function of the time delay between them. In image processing, correlation can be used as a way to measure the degree of match between an image and a filter, and the result of the correlation operation is also a feature map, which can be used for further processing.
 The key difference between convolution and correlation is the way the filter is processed. In convolution, the filter is flipped before being applied to the image, so the resulting feature map shows the presence of the filter in the image. In correlation, the filter is not flipped, so the resulting feature map shows the degree of match between the filter and the image. Convolution is used in deep learning because it allows the network to learn and extract features from the input data.
 
+Q.Why do Convolutional Layers need activation functions? they are just filters convolving with the image.
+Convolutional layers in a deep learning model act as feature extractors. They detect different features in the input image such as edges, lines, shapes, etc. However, the extracted features may not be useful in their raw form. They may need some non-linear transformations to make them more useful.
+Activation functions such as ReLU, tanh, or sigmoid serve this purpose. They help to introduce non-linearity into the model, making it capable of learning complex relationships between the input and output. They help to introduce non-linearity into the model, making it capable of learning complex relationships between the input and output.
+Without an activation function, the convolutional layers would just learn linear combinations of the input image, which may not capture the essence of the image. By using activation functions, the convolutional layers can learn non-linear relationships between the input image and the output, making them more powerful in detecting complex features.
 
+Q. What do you mean be linearity? What is the non linear relationship? Explain with examples
+Linearity refers to the relationship between two or more variables, where the change in one variable is proportional to the change in the other. If the relationship between two variables is linear, we can represent it with a straight line.
+On the other hand, a non-linear relationship is one where the change in one variable is not proportional to the change in the other variable. A non-linear relationship cannot be represented by a straight line. Instead, it requires a more complex mathematical function to model the relationship.
+For example, consider a simple linear relationship between height and weight of a person. If a person's height increases by 1 inch, their weight increases by 2 pounds. This relationship can be represented by a straight line, where weight is directly proportional to height.
+On the other hand, consider the relationship between age and salary. As a person grows older, their salary increases, but not at a constant rate. For example, the salary may increase more rapidly in the early stages of a person's career, but the rate of increase may slow down as they get closer to retirement. This relationship cannot be represented by a straight line and requires a more complex function to model it.
+In deep learning, activation functions are used to introduce non-linearity into the neural network, which allows it to learn more complex relationships between the inputs and outputs.
 
 Q. After the first Conv3D layer, the output will be a 3D feature map with the size (num_filters, output_height, output_width, output_depth). The size of the feature map depends on the specific hyperparameters used, such as the number of filters, the size of the filters, the stride, and the padding.
 Typically, the number of filters is specified in the layer and is a hyperparameter that needs to be determined through experimentation. The size of the filters, stride, and padding can be specified as parameters to the Conv3D layer.
@@ -53,3 +63,133 @@ The compile method is used to configure the model for training. It takes the fol
 loss: This argument specifies the loss function that is used to evaluate the model during training. In this case, it is using the categorical cross-entropy loss function. This loss function is commonly used for multiclass classification problems, where the goal is to predict one of many possible classes.
 optimizer: This argument specifies the optimization algorithm that is used to update the model parameters during training. In this case, it is using the Adagrad optimizer. Adagrad is a gradient-based optimization algorithm that adapts the learning rate to each parameter individually, allowing for fast convergence for sparse data.
 metrics: This argument specifies the metric(s) used to evaluate the model performance. In this case, it is using accuracy as the evaluation metric. Accuracy is a commonly used metric for multiclass classification problems, where it represents the fraction of correct predictions made by the model.
+
+Q. model.compile() vs model.fit()
+model.compile() is used to compile a model before training. It sets up the optimizer, loss function, and evaluation metrics that the model should use during training. This function is called once before training begins, and it sets the model’s hyperparameters.
+model.fit() is used to fit the model to a dataset. This is where the actual training of the model takes place. The fit method is called with the training data and the number of epochs to train for. During each epoch, the model’s weights are updated based on the optimizer, loss function, and evaluation metrics set in the compile method.
+In short, model.compile() sets up the model for training, and model.fit() trains the model using the setup defined in compile.
+
+Q. There are several types of activation functions used in neural networks, including:
+Sigmoid Function: This function maps any input value to a value between 0 and 1. It is defined by the formula 1 / (1 + e^-x). It is mainly used for binary classification problems.
+Rectified Linear Unit (ReLU): This function returns the input value if it is positive, otherwise it returns 0. The formula is f(x) = max(0, x). It is widely used due to its simplicity and improved training speed compared to other activation functions.
+Hyperbolic Tangent (tanh): This function maps any input value to a value between -1 and 1. It is defined by the formula tanh(x) = 2 / (1 + e^-2x) - 1. It is mainly used for multiclass classification problems.
+Leaky ReLU: This function is similar to the ReLU activation function but it adds a small negative slope for negative values. The formula is f(x) = max(0.01x, x).
+Softmax: This function is used for multiclass classification problems, it returns a probability distribution over the classes. The formula is softmax(x) = e^xi / ∑j e^xj.
+
+
+
+Q. What are different types of optimizers ? Explain each optimizer in detail and compare them
+There are several types of optimizers used in deep learning. Some of the commonly used optimizers are:
+
+Stochastic Gradient Descent (SGD): SGD is the simplest optimization algorithm and is used for updating the parameters in a model. It uses a random subset of the training data to update the model weights after each iteration. The formula for updating the weights using SGD is given by:
+weights = weights - learning_rate * gradient
+
+Momentum Optimizer: Momentum Optimizer is an extension of SGD that uses a moving average of the past gradients to determine the current update direction. This helps in faster convergence and reduces the oscillation of the gradients. The formula for updating the weights using Momentum Optimizer is given by:
+v = β * v + gradient
+weights = weights - learning_rate * v
+where β is the momentum parameter and v is the moving average of the past gradients.
+
+Adagrad: Adagrad is an adaptive learning rate optimization algorithm that uses a different learning rate for each parameter. The learning rate is updated after each iteration based on the historical gradient information. The formula for updating the weights using Adagrad is given by:
+sum_of_squared_gradients = sum_of_squared_gradients + gradient * gradient
+weights = weights - learning_rate * gradient / (sqrt(sum_of_squared_gradients) + ε)
+where ε is a small constant to avoid division by zero.
+
+Adadelta: Adadelta is an extension of Adagrad that uses a moving average of the historical gradient information to determine the learning rate. This eliminates the need to set a global learning rate. The formula for updating the weights using Adadelta is given by:
+sum_of_squared_gradients = β * sum_of_squared_gradients + (1-β) * gradient * gradient
+weights = weights - sqrt((sum_of_previous_updates + ε) / (sum_of_squared_gradients + ε)) * gradient
+where β is the decay rate, ε is a small constant to avoid division by zero, and sum_of_previous_updates is the moving average of the historical weight updates.
+
+RProp: RProp is an optimization algorithm that uses the sign of the gradient to determine the direction of the update and the magnitude of the update is adjusted dynamically. The formula for updating the weights using RProp is given by:
+if gradient * previous_gradient > 0:
+Δweights = Δweights * 1.2
+else:
+Δweights = Δweights * 0.5
+weights = weights - sign(gradient) * Δweights
+
+Adam: Adam is an optimization algorithm that combines the ideas of Momentum Optimizer and Adagrad. It uses a moving average of the past gradients to determine the current update direction and uses a different learning rate for each parameter based on the historical gradient information. The formula for updating the weights using Adam is given by:
+m = β1 * m + (1 - β1) * gradient
+v = β2 * v + (1 - β2) * gradient * gradient
+weights = weights - learning_rate * m / (sqrt(v) + ε)
+where β1 and β2 are the decay rates, m is the moving average of the past gradients, v is the moving average of the past squared gradients, and ε is a small constant to avoid division
+
+Q. What are different types of loss functions? Explain with formulas and compare them
+A loss function is a function that is used to measure the difference between the actual output and the predicted output in a machine learning model. The goal of training a model is to minimize the loss function. There are several different types of loss functions that are commonly used in machine learning, including:
+Mean Squared Error (MSE): This is the most common loss function used for regression problems. It measures the average squared difference between the predicted and actual values. The formula for MSE is given by:
+$Loss = \frac{1}{n}\sum_{i=1}^n (y_{actual} - y_{pred})^2$
+where n is the number of samples, y_actual is the actual value and y_pred is the predicted value.
+
+Mean Absolute Error (MAE): This loss function measures the average absolute difference between the predicted and actual values. The formula for MAE is given by:
+$Loss = \frac{1}{n}\sum_{i=1}^n |y_{actual} - y_{pred}|$
+where n is the number of samples, y_actual is the actual value and y_pred is the predicted value.
+
+Cross-Entropy Loss: This is a common loss function used for classification problems. It measures the distance between the predicted probability distribution and the actual distribution. The formula for cross-entropy loss is given by:
+$Loss = -\frac{1}{n}\sum_{i=1}^n y_{actual} \log(y_{pred})$
+where n is the number of samples, y_actual is the actual distribution and y_pred is the predicted distribution.
+
+Binary Cross-Entropy Loss: This is a variant of cross-entropy loss that is used for binary classification problems. The formula for binary cross-entropy loss is given by:
+$Loss = -\frac{1}{n}\sum_{i=1}^n [y_{actual} \log(y_{pred}) + (1 - y_{actual}) \log(1 - y_{pred})]$
+where n is the number of samples, y_actual is the actual value and y_pred is the predicted value.
+
+Categorical Cross-Entropy Loss: This is a variant of cross-entropy loss that is used for multi-class classification problems. The formula for categorical cross-entropy loss is given by:
+$Loss = -\frac{1}{n}\sum_{i=1}^n \sum_{j=1}^C y_{actual, j} \log(y_{pred, j})$
+where n is the number of samples, C is the number of classes, y_actual is the actual distribution and y_pred is the predicted distribution.
+
+Comparing these loss functions, MSE and MAE are typically used for regression problems, while cross-entropy loss and its variants are used for classification problems. The choice of loss function depends on the specific problem and the desired outcome. MSE and MAE are sensitive to outliers, while cross-entropy loss is not. On the other hand, cross-entropy loss is more computationally expensive compared to MSE and MAE.
+
+Q. What are various metrics used to evaluate performance of a model. Explain with formulas
+Accuracy: Accuracy is the number of correct predictions made by the model divided by the total number of predictions.
+Formula: accuracy = (True Positives + True Negatives) / Total Predictions.
+
+Precision: Precision is the number of true positive predictions made by the model divided by the total number of positive predictions.
+Formula: precision = True Positives / (True Positives + False Positives)
+
+Recall (Sensitivity or True Positive Rate): Recall is the number of true positive predictions made by the model divided by the total number of actual positive cases.
+Formula: recall = True Positives / (True Positives + False Negatives)
+
+F1 Score: F1 score is the harmonic mean of precision and recall. It is a balanced measure of both precision and recall.
+Formula: F1 score = 2 * ((precision * recall) / (precision + recall))
+
+AUC (Area Under the Curve) ROC: AUC is the area under the Receiver Operating Characteristic (ROC) curve. It is used to evaluate the performance of binary classifiers. The ROC curve plots the true positive rate against the false positive rate at various thresholds. A higher AUC indicates a better model.
+
+Mean Squared Error (MSE): MSE is used to evaluate the performance of regression models. It is the average of the squared differences between the predicted values and the true values.
+Formula: MSE = (1 / N) * Σ (predicted value - true value)^2
+
+Mean Absolute Error (MAE): MAE is also used to evaluate the performance of regression models. It is the average of the absolute differences between the predicted values and the true values.
+Formula: MAE = (1 / N) * Σ |predicted value - true value|
+
+Log Loss: Log loss is used to evaluate the performance of models in binary classification problems. It measures the accuracy of a model in predicting the probability of an event.
+Formula: Log Loss = -(1 / N) * Σ [y log(p) + (1-y) log (1-p)]
+
+Q. What is RSquared?
+R-Squared is a statistical measure that represents the proportion of the variance in the dependent variable that is predictable from the independent variable(s) in a regression model. R-Squared is also known as the coefficient of determination. It ranges from 0 to 1, where a value of 0 indicates that the model does not explain any of the variance in the dependent variable and a value of 1 indicates that the model explains all of the variance in the dependent variable.
+R-Squared is calculated as the ratio of the explained variance to the total variance, which is the sum of the explained variance and the residual variance. The residual variance is the variance in the dependent variable that is not explained by the independent variable(s).
+The formula for R-Squared is given as:
+R-Squared = 1 - (SSresidual/SStotal)
+Where SSresidual is the sum of squares of residuals and SStotal is the total sum of squares.
+
+
+Q. Correlation in variables: 
+Correlation is a statistical measure that indicates the extent to which two or more variables fluctuate together. It measures the strength of the relationship between two variables. The correlation is expressed as a value between -1 and 1.
+Feature Selection: Correlation helps in identifying variables that have a high impact on the response variable. Features with high correlation can be dropped as they might add noise to the model.
+Predictive Modeling: Correlation helps to understand the relationships between predictors and response variables. High correlation between predictors and response variables can indicate the possibility of building a predictive model.
+Pearson's Correlation Coefficient: This measures the linear relationship between two variables. It ranges from -1 to 1, where -1 indicates a strong negative correlation, 0 indicates no correlation, and 1 indicates a strong positive correlation. The formula for Pearson's correlation coefficient is:
+$$r = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^n (x_i - \bar{x})^2}\sqrt{\sum_{i=1}^n (y_i - \bar{y})^2}}$$
+
+
+Q. Little to none difference in accuracy was observed between 3DCNN model and 3DCNN with LSTM model, the code for both was provided here. What can be the reasons and possible solutions?
+There could be several reasons for the little to no difference in accuracy observed between the 3DCNN model and the 3DCNN with LSTM model. Some possible reasons include:
+Insufficient training data: If the training data is not large enough, the models may not be able to learn the complex relationships between the input and target variables. This can lead to poor performance and low accuracy.
+Overfitting: Overfitting occurs when the model is trained too well on the training data and is unable to generalize to new data. This can lead to poor accuracy on the test set.
+Poor choice of hyperparameters: The choice of hyperparameters, such as the number of layers, the number of neurons in each layer, and the learning rate, can have a significant impact on the performance of the model. A poor choice of hyperparameters can lead to low accuracy.
+Incorrect model architecture: The architecture of the model, including the choice of layers, activation functions, and loss functions, can have a significant impact on the performance of the model. An incorrect architecture can lead to poor accuracy.
+Possible solutions to these problems include:
+Collect more training data: Collecting more training data can help the model learn the complex relationships between the input and target variables.
+Use regularization techniques: Regularization techniques, such as dropout and early stopping, can help prevent overfitting.
+Fine-tune hyperparameters: Fine-tuning the hyperparameters can help improve the performance of the model. This can be done using grid search or random search.
+Try different model architectures: Trying different model architectures can help identify the best architecture for the problem. This can include experimenting with different numbers of layers, different activation functions, and different loss functions.
+
+Q. What is LSTM, RNN? What are they preferred over conventional models?
+LSTM (Long Short-Term Memory) and RNN (Recurrent Neural Network) are both types of artificial neural networks used in the field of deep learning.
+LSTM is a type of RNN that is designed to handle the issue of vanishing gradients in traditional RNNs. It uses gating mechanisms to control the flow of information through the network, allowing it to better capture long-term dependencies in sequential data.
+RNNs, on the other hand, are neural networks designed to handle sequential data, such as speech, text, or video. They use feedback loops to allow information to be passed from one step of the network to the next, allowing the network to retain information from previous steps in the sequence.
+LSTMs and RNNs are preferred or conventional models for tasks that involve sequential data, such as speech recognition, natural language processing, and video classification. They have been used in many successful applications, such as language translation and sentiment analysis, and are widely considered to be state-of-the-art models for these tasks.
