@@ -7,6 +7,7 @@
 We have limited the scope of the project to only predicting the words. 
 
 ## Modules
+The main code cell are in the files data_genertor.ipynb and training_model.ipynb
 
 data_generator.ipynb : Crops lips from face images and store them in the same folder structure as the original.
 ![image](https://user-images.githubusercontent.com/38484434/218016938-a448ca6c-390f-462c-bc57-ab79a578b1c1.png)
@@ -15,6 +16,7 @@ data_generator.ipynb : Crops lips from face images and store them in the same fo
 Extracted features:
 ![image](https://user-images.githubusercontent.com/38484434/218028292-d936b189-86c4-4bf3-87c0-f7b02c24ea9a.png)
 
+training_model.ipynb : 
 Model: 
 
 ![image](https://user-images.githubusercontent.com/38484434/218028768-8a767227-408c-4c34-a46f-fc42047a6eff.png)
