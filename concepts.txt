@@ -476,10 +476,22 @@ Data augmentation is a technique used in deep learning to increase the size of t
 
 Q. What is the difference between a generative model and a discriminative model, and what are some examples of each?
 A generative model learns the probability distribution of the data, while a discriminative model learns the boundary between different classes. In other words, a generative model models the joint distribution of the input and output, while a discriminative model models the conditional distribution of the output given the input.
-
 Examples of generative models include Gaussian mixture models and variational autoencoders. Gaussian mixture models learn the probability distribution of the data by modeling it as a combination of Gaussian distributions. Variational autoencoders learn a low-dimensional representation of the data by generating new examples from the learned probability distribution.
-
 Examples of discriminative models include logistic regression and support vector machines. Logistic regression learns a linear boundary between two classes, while support vector machines learn a nonlinear boundary.
+
+Q. Common activation functions used in neural networks:
+Sigmoid function: maps any input to a value between 0 and 1, which is useful for binary classification problems.
+ReLU (Rectified Linear Unit) function: outputs the input directly if it is positive, and outputs 0 for negative inputs. It is commonly used in deep neural networks.
+Softmax function: outputs a probability distribution over multiple classes, which is useful for multi-class classification problems.
+Backpropagation is a supervised learning algorithm used to train neural networks. It works by updating the weights of the network based on the difference between the predicted output and the true output. This difference is measured by a loss function, and the weights are updated using gradient descent.
+
+Q. Common regularization techniques used in deep learning:
+Dropout: randomly drops out some neurons during training, which can prevent overfitting.
+Weight decay: adds a penalty term to the loss function to encourage the weights to be small, which can also prevent overfitting.
+
+Q. Convolutional neural networks (CNNs) are a type of neural network used for image recognition tasks. They use convolutional layers to extract features from the input image, followed by pooling layers to reduce the size of the feature maps. These features are then fed into a fully connected layer to make a prediction.
+
+Q. Recurrent neural networks (RNNs) are a type of neural network used for natural language processing tasks. They use a feedback loop to allow information to persist between time steps, which is useful for processing sequential data. An example of this is language translation, where RNNs can be used to generate a sequence of words in a target language based on a sequence of words in a source language.
 
 What is machine learning, and how is it different from traditional programming?
 What are the different types of machine learning, and what are their applications?
