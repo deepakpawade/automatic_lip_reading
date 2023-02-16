@@ -16,6 +16,11 @@ A convolution is a mathematical operation between two functions to produce a thi
 Correlation is a measure of the similarity between two signals, usually as a function of the time delay between them. In image processing, correlation can be used as a way to measure the degree of match between an image and a filter, and the result of the correlation operation is also a feature map, which can be used for further processing.
 The key difference between convolution and correlation is the way the filter is processed. In convolution, the filter is flipped before being applied to the image, so the resulting feature map shows the presence of the filter in the image. In correlation, the filter is not flipped, so the resulting feature map shows the degree of match between the filter and the image. Convolution is used in deep learning because it allows the network to learn and extract features from the input data.
 
+Why CNN is used for images and not only ANN 
+CNNs (Convolutional Neural Networks) are specifically designed for image processing and recognition tasks. While a standard Artificial Neural Network (ANN) can also process images, it is not as effective as CNNs. This is because images are structured data, which has spatial relationships between adjacent pixels. CNNs have a distinct advantage in processing images due to their unique architecture, which is optimized for feature extraction from images.
+CNNs use convolutional layers to extract features from images, which are then passed through pooling layers to reduce their size while retaining important features. The extracted features are then passed through a fully connected layer, which is similar to the hidden layers of an ANN, to classify the image.
+Overall, the specialized architecture of CNNs, which is optimized for spatial processing, makes them more effective for image recognition tasks than standard ANNs.
+
 Q.Why do Convolutional Layers need activation functions? they are just filters convolving with the image.
 Convolutional layers in a deep learning model act as feature extractors. They detect different features in the input image such as edges, lines, shapes, etc. However, the extracted features may not be useful in their raw form. They may need some non-linear transformations to make them more useful.
 Activation functions such as ReLU, tanh, or sigmoid serve this purpose. They help to introduce non-linearity into the model, making it capable of learning complex relationships between the input and output. They help to introduce non-linearity into the model, making it capable of learning complex relationships between the input and output.
@@ -76,7 +81,15 @@ Hyperbolic Tangent (tanh): This function maps any input value to a value between
 Leaky ReLU: This function is similar to the ReLU activation function but it adds a small negative slope for negative values. The formula is f(x) = max(0.01x, x).
 Softmax: This function is used for multiclass classification problems, it returns a probability distribution over the classes. The formula is softmax(x) = e^xi / ∑j e^xj.
 
+Q. Batch normalization
+Batch normalization is a technique used to improve the training of deep neural networks by normalizing the inputs of each layer. The aim of batch normalization is to ensure that the input to each layer has a mean of 0 and a standard deviation of 1.
+The normalization is done for each mini-batch of data that is fed to the neural network during training. This means that the input data is normalized for each mini-batch, which helps to reduce the impact of covariate shift.
+Covariate shift occurs when the distribution of the input data changes over time. This can make it difficult for the neural network to learn the underlying patterns in the data, which can lead to slower training and lower accuracy.
+Batch normalization helps to alleviate this problem by normalizing the input data at each layer. This ensures that the input to each layer has a consistent distribution, which makes it easier for the neural network to learn the underlying patterns in the data.
+In addition to improving the training of deep neural networks, batch normalization can also improve the generalization performance of the network. This is because it helps to reduce overfitting by regularizing the activations of each layer.
 
+Q. What is an activation function
+An activation function is a mathematical function used in neural networks to introduce non-linearity into the output of a neuron. It is applied to the output of each neuron in the network to determine whether the neuron should be activated, or "fired". Activation functions help neural networks learn and model non-linear relationships between inputs and outputs
 
 Q. What are different types of optimizers ? Explain each optimizer in detail and compare them
 There are several types of optimizers used in deep learning. Some of the commonly used optimizers are:
@@ -133,6 +146,9 @@ where n is the number of samples, y_actual is the actual value and y_pred is the
 Categorical Cross-Entropy Loss: This is a variant of cross-entropy loss that is used for multi-class classification problems. The formula for categorical cross-entropy loss is given by:
 $Loss = -\frac{1}{n}\sum_{i=1}^n \sum_{j=1}^C y_{actual, j} \log(y_{pred, j})$
 where n is the number of samples, C is the number of classes, y_actual is the actual distribution and y_pred is the predicted distribution.
+
+Sparse categorical cross entropy : Sparse categorical cross entropy is a loss function used in neural networks for multi-class classification problems. It is similar to categorical cross entropy but is used when the labels are in a sparse matrix format, meaning that each training example has only one label, instead of a vector of labels.
+L = -log(p[y_true]), where L is the loss, p[y_true] is the predicted probability of the true label y_true.
 
 Comparing these loss functions, MSE and MAE are typically used for regression problems, while cross-entropy loss and its variants are used for classification problems. The choice of loss function depends on the specific problem and the desired outcome. MSE and MAE are sensitive to outliers, while cross-entropy loss is not. On the other hand, cross-entropy loss is more computationally expensive compared to MSE and MAE.
 
@@ -194,7 +210,20 @@ LSTM is a type of RNN that is designed to handle the issue of vanishing gradient
 RNNs, on the other hand, are neural networks designed to handle sequential data, such as speech, text, or video. They use feedback loops to allow information to be passed from one step of the network to the next, allowing the network to retain information from previous steps in the sequence.
 LSTMs and RNNs are preferred or conventional models for tasks that involve sequential data, such as speech recognition, natural language processing, and video classification. They have been used in many successful applications, such as language translation and sentiment analysis, and are widely considered to be state-of-the-art models for these tasks.
 
+Q. Weight initialization techniques
+Weight initialization is a critical step in the training of neural networks. Poor initialization can result in slower convergence or even prevent the network from converging altogether. Here are some common weight initialization techniques:
 
+Random initialization: In this technique, the weights are initialized with random values between -1 and 1 or between 0 and 1. This is a simple technique but may not work well for deep networks.
+
+Xavier initialization: This technique is named after the researcher who proposed it, Xavier Glorot. In this technique, the weights are initialized with a Gaussian distribution with a mean of 0 and a variance of 1/n, where n is the number of inputs to the layer. This technique is commonly used for tanh and sigmoid activation functions.
+
+He initialization: This technique is named after the researcher who proposed it, Kaiming He. In this technique, the weights are initialized with a Gaussian distribution with a mean of 0 and a variance of 2/n, where n is the number of inputs to the layer. This technique is commonly used for ReLU activation functions.
+
+Uniform initialization: In this technique, the weights are initialized uniformly between a range of values, such as [-0.1, 0.1] or [0, 1]. This technique is simple but may not work well for deep networks.
+
+Orthogonal initialization: In this technique, the weights are initialized with a random orthonormal matrix. This technique is commonly used in recurrent neural networks (RNNs).
+
+Sparse initialization: In this technique, the weights are initialized with a sparse matrix, where only a small percentage of the weights are non-zero. This technique can be useful for reducing the number of parameters in the network.
 
 Q. What is machine learning, and how is it different from traditional programming?
 Machine learning is a subfield of artificial intelligence that involves developing algorithms that can learn from data and make predictions or decisions based on that data. It is different from traditional programming in that it does not rely on explicit instructions to perform a task. Instead, it learns to perform the task by finding patterns in the data.
