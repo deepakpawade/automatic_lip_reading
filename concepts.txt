@@ -257,6 +257,13 @@ Q. What is regularization, and why is it used in machine learning?
 Regularization is a technique used in machine learning to prevent overfitting by adding a penalty term to the loss function. The penalty term encourages the model to have simpler weights, which in turn reduces the model's complexity and prevents it from fitting the training data too closely.
 There are several types of regularization, including L1 regularization (which encourages sparse weights) and L2 regularization (which encourages small weights). Regularization is important in machine learning because it helps to prevent overfitting and improves the model's ability to generalize to new data.
 
+L1 regularization adds a penalty term to the loss function of a model that is proportional to the sum of the absolute values of the model parameters. This encourages the model to have sparse weights, meaning that some of the weights may be set to zero. This can be useful in situations where some of the features are irrelevant, as the corresponding weights will be set to zero and the model will effectively ignore those features.
+For example, suppose we have a linear regression model with three features, x1, x2, and x3, and we want to use L1 regularization. The loss function of the model with L1 regularization would be:
+loss = MSE + lambda * (|w1| + |w2| + |w3|)
+L2 regularization, on the other hand, adds a penalty term to the loss function that is proportional to the sum of the squares of the model parameters. This encourages the model to have small weights, as larger weights will result in a larger penalty term. This can be useful in situations where all the features are potentially relevant, but we want to avoid overfitting.
+For example, suppose we have a logistic regression model with two features, x1 and x2, and we want to use L2 regularization. The loss function of the model with L2 regularization would be:
+loss = Cross-entropy loss + lambda * (w1^2 + w2^2)
+
 Q. What is the difference between parametric and non-parametric machine learning algorithms?
 Parametric machine learning algorithms make assumptions about the distribution of the data and the form of the relationship between the input variables and the output variable. They have a fixed number of parameters that are learned during training and used to make predictions.
 Non-parametric machine learning algorithms do not make assumptions about the distribution of the data or the form of the relationship between the input variables and the output variable. They can have a varying number of parameters, which are learned from the data and used to make predictions.
@@ -521,6 +528,9 @@ Weight decay: adds a penalty term to the loss function to encourage the weights 
 Q. Convolutional neural networks (CNNs) are a type of neural network used for image recognition tasks. They use convolutional layers to extract features from the input image, followed by pooling layers to reduce the size of the feature maps. These features are then fed into a fully connected layer to make a prediction.
 
 Q. Recurrent neural networks (RNNs) are a type of neural network used for natural language processing tasks. They use a feedback loop to allow information to persist between time steps, which is useful for processing sequential data. An example of this is language translation, where RNNs can be used to generate a sequence of words in a target language based on a sequence of words in a source language.
+
+Q. Explain working of logistic regression.
+
 
 What is machine learning, and how is it different from traditional programming?
 What are the different types of machine learning, and what are their applications?
